@@ -131,6 +131,11 @@ components:
         - protocols
         - publishers
       properties:
+        private_app_id:
+          x-speakeasy-terraform-ignore: true
+          type: integer
+          format: int32
+          description: Auto-generated ID returned by the API on create
         allow_unauthenticated_cors:
           type: boolean
           example: false
