@@ -33,7 +33,8 @@ components:
           example: 1
           type: integer
       type: object
-    RequestSchema:
+    UrllistRequest:
+      x-speakeasy-entity: URLList
       properties:
         data:
           properties:
@@ -85,6 +86,7 @@ components:
           type: integer
       type: object
     Urllist:
+      x-speakeasy-entity: URLList
       properties:
         data:
           properties:
@@ -120,13 +122,17 @@ components:
           type: integer
       type: object
 info:
-  description: ""
-  title: ""
-  version: ""
+  description: "URL list management API"
+  title: "URL List"
+  version: "1.0.0"
 openapi: 3.0.0
 paths:
   /policy/urllist:
     get:
+      operationId: listURLLists
+      x-speakeasy-name-override: list_objects
+      x-speakeasy-entity-operation: URLListList#read
+      x-speakeasy-group: URLList
       description:
         Returns an array of URL list objects containing ID, name, URLs,
         type, modify type, modify by, modify time, and pending information.
@@ -140,6 +146,7 @@ paths:
               - 0
               - 1
             type: number
+          x-speakeasy-ignore: true
         - description: Data values to return in response call. Defaults to all values
           in: query
           name: field
@@ -154,6 +161,7 @@ paths:
               - modify_by
               - pending
             type: string
+          x-speakeasy-ignore: true
       responses:
         "200":
           content:
@@ -165,12 +173,16 @@ paths:
           description: Succesfully got URL lists
       summary: Get all applied and pending URL lists
     post:
+      operationId: createURLList
+      x-speakeasy-name-override: create
+      x-speakeasy-entity-operation: URLList#create
+      x-speakeasy-group: URLList
       description: Create a new URL list configuration
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestSchema"
+              $ref: "#/components/schemas/UrllistRequest"
         description: New URL list object
         required: true
       responses:
@@ -178,9 +190,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/Urllist"
-                type: array
+                $ref: "#/components/schemas/Urllist"
           description: successful operation
       summary: Create a new URL list.
     x-netskope-params:
@@ -190,7 +200,8 @@ paths:
       version: 2
   /policy/urllist/deploy:
     post:
-      description: Applies currently pending changes for URL lists. To ensure efficiency, avoid unncessary network overhead and reliable deployments, we recommend batching all desired changes and applying them in a single deploy call rather than making single changes and initiating multiple deploy calls.
+      x-speakeasy-ignore: true
+      description: Applies currently pending changes for URL lists.
       parameters: []
       responses:
         "200":
@@ -209,10 +220,9 @@ paths:
       version: 2
   /policy/urllist/file:
     post:
+      x-speakeasy-ignore: true
       description:
-        "Upload multiple URL list configurations via a JSON file. \n\n\
-        \ URL lists NOT containing an ID will create new URL lists. \n\n URL lists\
-        \ containing an ID will replace an existing URL list with the same ID."
+        "Upload multiple URL list configurations via a JSON file."
       requestBody:
         content:
           multipart/form-data:
@@ -222,9 +232,7 @@ paths:
                   format: binary
                   type: string
               type: object
-        description:
-          '``` { "items": [ { "name": "string", "data": { "urls": ["www.example.com"],
-          "type": "exact" } } ] } ```'
+        description: JSON file with URL list configurations
       responses:
         "200":
           content:
@@ -240,16 +248,19 @@ paths:
       version: 2
   /policy/urllist/{id}:
     delete:
+      operationId: deleteURLList
+      x-speakeasy-name-override: delete
+      x-speakeasy-entity-operation: URLList#delete
+      x-speakeasy-group: URLList
       description: Mark a URL list as pending deletion.
       parameters:
-        - content:
-            text/plain:
-              schema:
-                type: number
-          description: ID of the URL list
+        - description: ID of the URL list
           in: path
           name: id
           required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           content:
@@ -259,16 +270,19 @@ paths:
           description: successful operation
       summary: Delete a URL list.
     get:
+      operationId: getURLList
+      x-speakeasy-name-override: read
+      x-speakeasy-entity-operation: URLList#read
+      x-speakeasy-group: URLList
       description: Get the configuration of the given URL list ID.
       parameters:
-        - content:
-            text/plain:
-              schema:
-                type: number
-          description: ID of the URL list
+        - description: ID of the URL list
           in: path
           name: id
           required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           content:
@@ -278,22 +292,24 @@ paths:
           description: successful operation
       summary: Get URL list by ID.
     put:
+      operationId: updateURLList
+      x-speakeasy-name-override: update
+      x-speakeasy-entity-operation: URLList#update
+      x-speakeasy-group: URLList
       description: Completely replace the configuration of the given URL list ID.
-      operationId: updateUser
       parameters:
-        - content:
-            text/plain:
-              schema:
-                type: number
-          description: ID of the URL list
+        - description: ID of the URL list
           in: path
           name: id
           required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestSchema"
+              $ref: "#/components/schemas/UrllistRequest"
         description: New URL list object
         required: true
       responses:
@@ -311,29 +327,27 @@ paths:
       version: 2
   /policy/urllist/{id}/{action}:
     patch:
+      x-speakeasy-ignore: true
       description: Update name, URLs, and/or type of URL list object
       parameters:
-        - content:
-            text/plain:
-              schema:
-                type: number
-          description: ID of the URL list
+        - description: ID of the URL list
           in: path
           name: id
           required: true
-        - content:
-            text/plain:
-              schema:
-                type: string
-          description: Replace or append to current URLs
+          schema:
+            type: integer
+            format: int64
+        - description: Replace or append to current URLs
           in: path
           name: action
           required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestSchema"
+              $ref: "#/components/schemas/UrllistRequest"
         description: New URL list object
         required: true
       responses:

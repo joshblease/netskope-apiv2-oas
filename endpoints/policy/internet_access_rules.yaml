@@ -1,0 +1,907 @@
+openapi: 3.0.0
+info:
+  title: Internet Access Rules
+  version: 1.0.0
+paths:
+  /policy/internetaccess/rules:
+    get:
+      operationId: listInternetAccessRules
+      x-speakeasy-name-override: list_objects
+      x-speakeasy-entity-operation: InternetAccessRuleList#read
+      x-speakeasy-group: InternetAccessRule
+      summary: List internet access rules
+      parameters:
+        - in: query
+          name: offset
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: filter
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sortby
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+            enum:
+              - rule_order
+              - name
+              - create_time
+              - modify_time
+        - in: query
+          name: sortorder
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - in: query
+          name: interactive
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetInternetAccessRulesFullResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    post:
+      operationId: createInternetAccessRule
+      x-speakeasy-name-override: create
+      x-speakeasy-entity-operation: InternetAccessRule#create
+      x-speakeasy-group: InternetAccessRule
+      summary: Create an internet access rule
+      parameters:
+        - in: query
+          name: interactive
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInternetAccessRuleReq"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+      customerFacing: true
+  /policy/internetaccess/rules/{id}:
+    get:
+      operationId: getInternetAccessRule
+      x-speakeasy-name-override: read
+      x-speakeasy-entity-operation: InternetAccessRule#read
+      x-speakeasy-group: InternetAccessRule
+      summary: Get an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    patch:
+      operationId: updateInternetAccessRule
+      x-speakeasy-name-override: update
+      x-speakeasy-entity-operation: InternetAccessRule#update
+      x-speakeasy-group: InternetAccessRule
+      summary: Update an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: interactive
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInternetAccessRuleReq"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    delete:
+      operationId: deleteInternetAccessRule
+      x-speakeasy-name-override: delete
+      x-speakeasy-entity-operation: InternetAccessRule#delete
+      x-speakeasy-group: InternetAccessRule
+      summary: Delete an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: interactive
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteRuleResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+      customerFacing: true
+  /policy/internetaccess/rules/{id}/move:
+    post:
+      operationId: moveInternetAccessRule
+      x-speakeasy-ignore: true
+      summary: Move an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RulePosition"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+  /policy/internetaccess/rules/{id}/revert:
+    post:
+      operationId: revertInternetAccessRule
+      x-speakeasy-ignore: true
+      summary: Revert an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+  /policy/internetaccess/rules/{id}/versions/{versionid}:
+    get:
+      operationId: getInternetAccessRuleVersion
+      x-speakeasy-ignore: true
+      summary: Get a specific version of an internet access rule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: versionid
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessRuleResp"
+          description: successful operation
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+  /policy/internetaccess/rules/applied:
+    get:
+      operationId: listAppliedInternetAccessRules
+      x-speakeasy-ignore: true
+      summary: List applied internet access rules
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetInternetAccessRulesFullResp"
+          description: successful operation
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+  /policy/internetaccess/rules/deploy:
+    post:
+      operationId: deployInternetAccessRules
+      x-speakeasy-ignore: true
+      summary: Deploy internet access rules
+      responses:
+        "200":
+          description: successful operation
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy
+components:
+  schemas:
+    RulePosition:
+      required:
+        - direction
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+            - top
+            - bottom
+            - before
+            - after
+        rule_id:
+          type: string
+    ActionConfig:
+      required:
+        - action_name
+      type: object
+      properties:
+        action_name:
+          type: string
+          enum:
+            - alert
+            - allow
+            - block
+            - bypass
+            - "user alert"
+            - "add smtp headers"
+        firewall_template_file_name:
+          type: string
+          enum:
+            - ftp_cfw_block_page.html
+        notification_template_file_name:
+          type: string
+        smtp_headers:
+          type: object
+          additionalProperties:
+            type: string
+    Actions:
+      type: object
+      properties:
+        dlp:
+          $ref: "#/components/schemas/DLPActions"
+        rule_action:
+          $ref: "#/components/schemas/ActionConfig"
+        threat_protection:
+          $ref: "#/components/schemas/TSSActions"
+    Applications:
+      type: object
+      properties:
+        app_suites_ids:
+          type: array
+          items:
+            type: string
+        predefined_cloud_application_ids:
+          type: array
+          items:
+            type: string
+        predefined_firewall_application_ids:
+          type: array
+          items:
+            type: string
+    Categories:
+      type: object
+      properties:
+        custom_category_ids:
+          type: array
+          items:
+            type: string
+        predefined_category_ids:
+          type: array
+          items:
+            type: string
+    Identity:
+      type: object
+      properties:
+        custom_ad_attributes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        org_units:
+          type: array
+          items:
+            type: string
+        user_authentication:
+          type: string
+          enum:
+            - authenticated
+            - unauthenticated
+        user_group_ids:
+          type: array
+          items:
+            type: string
+        users:
+          type: array
+          items:
+            type: string
+    NetworkIDs:
+      required:
+        - network_ids
+      type: object
+      properties:
+        network_ids:
+          type: array
+          items:
+            type: string
+    StorageConstraint:
+      required:
+        - storage_constraint_ids
+      type: object
+      properties:
+        storage_constraint_ids:
+          type: array
+          items:
+            type: string
+    UserConstraint:
+      required:
+        - user_constraint_ids
+      type: object
+      properties:
+        user_constraint_ids:
+          type: array
+          items:
+            type: string
+    UserConfidence:
+      required:
+        - index
+        - operator
+      type: object
+      properties:
+        index:
+          type: integer
+          minimum: 0
+          maximum: 1000
+        operator:
+          type: string
+          enum:
+            - lt
+            - gt
+    ObjectType:
+      required:
+        - activity
+        - names
+      type: object
+      properties:
+        activity:
+          type: string
+        names:
+          type: array
+          items:
+            type: string
+    Schedule:
+      type: object
+      properties:
+        end_time:
+          type: string
+        start_time:
+          type: string
+    Criteria:
+      required:
+        - activities
+      type: object
+      properties:
+        access_method_names:
+          type: array
+          items:
+            type: string
+        access_proxy_ids:
+          type: array
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            type: string
+        activity_destination_storage:
+          $ref: "#/components/schemas/StorageConstraint"
+        activity_destination_user:
+          $ref: "#/components/schemas/UserConstraint"
+        activity_object_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/ObjectType"
+        activity_source_storage:
+          $ref: "#/components/schemas/StorageConstraint"
+        activity_source_user:
+          $ref: "#/components/schemas/UserConstraint"
+        any_traffic:
+          type: object
+          properties: {}
+        any_web_traffic:
+          type: object
+          properties: {}
+        app_instance_ids:
+          type: array
+          items:
+            type: string
+        app_instance_tags:
+          type: array
+          items:
+            type: string
+        applications:
+          $ref: "#/components/schemas/Applications"
+        browser_names:
+          type: array
+          items:
+            type: string
+        categories:
+          $ref: "#/components/schemas/Categories"
+        cci_app_tags:
+          type: array
+          items:
+            type: string
+        ccl:
+          type: array
+          items:
+            type: string
+        destination_country_names:
+          type: array
+          items:
+            type: string
+        destination_profile_ids:
+          type: array
+          items:
+            type: string
+        file_profile_ids:
+          type: array
+          items:
+            type: string
+        http_header_ids:
+          type: array
+          items:
+            type: string
+        identity:
+          $ref: "#/components/schemas/Identity"
+        os_family_names:
+          type: array
+          items:
+            type: string
+        service_object_ids:
+          type: array
+          items:
+            type: string
+        source_country_names:
+          type: array
+          items:
+            type: string
+        source_ip:
+          $ref: "#/components/schemas/NetworkIDs"
+        source_ip_egress:
+          $ref: "#/components/schemas/NetworkIDs"
+        user_confidence:
+          $ref: "#/components/schemas/UserConfidence"
+    Exception:
+      type: object
+      properties:
+        custom_ad_attributes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        destination_country_names:
+          type: array
+          items:
+            type: string
+        destination_profile_ids:
+          type: array
+          items:
+            type: string
+        file_profile_ids:
+          type: array
+          items:
+            type: string
+        org_units:
+          type: array
+          items:
+            type: string
+        service_object_ids:
+          type: array
+          items:
+            type: string
+        source_country_names:
+          type: array
+          items:
+            type: string
+        source_ip:
+          $ref: "#/components/schemas/NetworkIDs"
+        source_ip_egress:
+          $ref: "#/components/schemas/NetworkIDs"
+        user_group_ids:
+          type: array
+          items:
+            type: string
+        users:
+          type: array
+          items:
+            type: string
+    DLPActionConfig:
+      required:
+        - action_name
+      type: object
+      properties:
+        action_name:
+          type: string
+          enum:
+            - alert
+            - allow
+            - block
+            - "user alert"
+            - "add smtp headers"
+        firewall_template_file_name:
+          type: string
+          enum:
+            - ftp_cfw_block_page.html
+        notification_template_file_name:
+          type: string
+        smtp_headers:
+          type: object
+          additionalProperties:
+            type: string
+    DLPActions:
+      required:
+        - profiles
+      type: object
+      properties:
+        continue_policy_evaluation:
+          type: boolean
+        on_mismatch:
+          $ref: "#/components/schemas/ActionConfig"
+        profiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/DLPProfile"
+    DLPProfile:
+      required:
+        - action
+        - profile_id
+      type: object
+      properties:
+        action:
+          $ref: "#/components/schemas/DLPActionConfig"
+        profile_id:
+          type: string
+    TSSActionConfig:
+      required:
+        - action_name
+      type: object
+      properties:
+        action_name:
+          type: string
+          enum:
+            - alert
+            - allow
+            - block
+            - "user alert"
+            - "add smtp headers"
+        notification_template_file_name:
+          type: string
+        smtp_headers:
+          type: object
+          additionalProperties:
+            type: string
+    TSSActions:
+      required:
+        - high_severity
+        - low_severity
+        - medium_severity
+      type: object
+      properties:
+        high_severity:
+          $ref: "#/components/schemas/TSSActionConfig"
+        low_severity:
+          $ref: "#/components/schemas/TSSActionConfig"
+        medium_severity:
+          $ref: "#/components/schemas/TSSActionConfig"
+        on_mismatch:
+          $ref: "#/components/schemas/ActionConfig"
+        patient_zero_protection:
+          type: boolean
+    CreateInternetAccessRuleReq:
+      x-speakeasy-entity: InternetAccessRule
+      required:
+        - actions
+        - criteria
+        - group_id
+        - name
+        - position
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          maxLength: 100
+          type: string
+        description:
+          maxLength: 200
+          type: string
+        enabled:
+          type: boolean
+        group_id:
+          type: string
+        position:
+          $ref: "#/components/schemas/RulePosition"
+        criteria:
+          $ref: "#/components/schemas/Criteria"
+        exceptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Exception"
+        actions:
+          $ref: "#/components/schemas/Actions"
+        schedule:
+          $ref: "#/components/schemas/Schedule"
+    UpdateInternetAccessRuleReq:
+      x-speakeasy-entity: InternetAccessRule
+      required:
+        - actions
+        - criteria
+        - name
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          type: string
+        description:
+          maxLength: 200
+          type: string
+        enabled:
+          type: boolean
+        criteria:
+          $ref: "#/components/schemas/Criteria"
+        exceptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Exception"
+        actions:
+          $ref: "#/components/schemas/Actions"
+        schedule:
+          $ref: "#/components/schemas/Schedule"
+    GetInternetAccessRulesFullResp:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: "#/components/schemas/InternetAccessRuleResp"
+        total_count:
+          type: integer
+    InternetAccessRuleResp:
+      x-speakeasy-entity: InternetAccessRule
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        group_id:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending-create
+            - pending-update
+            - pending-delete
+            - applied
+        criteria:
+          $ref: "#/components/schemas/Criteria"
+        exceptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Exception"
+        actions:
+          $ref: "#/components/schemas/Actions"
+        schedule:
+          $ref: "#/components/schemas/Schedule"
+        create_by:
+          type: string
+        create_time:
+          type: string
+        modify_by:
+          type: string
+        modify_time:
+          type: string
+    DeleteRuleResp:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - pending-delete
+            - success
+    MultiErrResp:
+      type: object
+      properties:
+        datetime:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/SingleError"
+        request_id:
+          type: string
+    SingleError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string

@@ -1,0 +1,421 @@
+openapi: 3.0.0
+info:
+  title: Internet Access Groups
+  version: 1.0.0
+paths:
+  /policy/internetaccess/groups:
+    get:
+      operationId: listInternetAccessGroups
+      x-speakeasy-name-override: list_objects
+      x-speakeasy-entity-operation: InternetAccessGroupList#read
+      x-speakeasy-group: InternetAccessGroup
+      summary: List internet access groups
+      parameters:
+        - in: query
+          name: offset
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: filter
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sortby
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+            enum:
+              - group_order
+              - name
+              - create_time
+              - modify_time
+        - in: query
+          name: sortorder
+          x-speakeasy-ignore: true
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetInternetAccessGroupsFullResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    post:
+      operationId: createInternetAccessGroup
+      x-speakeasy-name-override: create
+      x-speakeasy-entity-operation: InternetAccessGroup#create
+      x-speakeasy-group: InternetAccessGroup
+      summary: Create an internet access group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupReq"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessGroupResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy_groups
+      customerFacing: true
+  /policy/internetaccess/groups/{id}:
+    get:
+      operationId: getInternetAccessGroup
+      x-speakeasy-name-override: read
+      x-speakeasy-entity-operation: InternetAccessGroup#read
+      x-speakeasy-group: InternetAccessGroup
+      summary: Get an internet access group
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessGroupResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    patch:
+      operationId: updateInternetAccessGroup
+      x-speakeasy-name-override: update
+      x-speakeasy-entity-operation: InternetAccessGroup#update
+      x-speakeasy-group: InternetAccessGroup
+      summary: Update an internet access group
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGroupReq"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessGroupResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    delete:
+      operationId: deleteInternetAccessGroup
+      x-speakeasy-name-override: delete
+      x-speakeasy-entity-operation: InternetAccessGroup#delete
+      x-speakeasy-group: InternetAccessGroup
+      summary: Delete an internet access group
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteGroupResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy_groups
+      customerFacing: true
+  /policy/internetaccess/groups/{id}/move:
+    post:
+      operationId: moveInternetAccessGroup
+      x-speakeasy-ignore: true
+      summary: Move an internet access group
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GroupPosition"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternetAccessGroupResp"
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MultiErrResp"
+          description: Internal server error
+    x-netskope-params:
+      serviceConfig: integrated-policy-orchestrator
+      version: 2
+      apiGroup: internet_policy_groups
+      customerFacing: true
+components:
+  schemas:
+    GroupType:
+      type: string
+      enum:
+        - header
+        - footer
+        - default
+        - custom
+    CreateGroupReq:
+      x-speakeasy-entity: InternetAccessGroup
+      required:
+        - name
+        - position
+      type: object
+      properties:
+        description:
+          maxLength: 200
+          type: string
+        id:
+          type: string
+        label_ids:
+          type: array
+          items:
+            type: string
+        name:
+          maxLength: 100
+          type: string
+        position:
+          $ref: "#/components/schemas/GroupPosition"
+    UpdateGroupReq:
+      x-speakeasy-entity: InternetAccessGroup
+      type: object
+      properties:
+        description:
+          maxLength: 200
+          type: string
+        label_ids:
+          type: array
+          items:
+            type: string
+        name:
+          maxLength: 100
+          minLength: 1
+          type: string
+    DeleteGroupResp:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - success
+    GroupPosition:
+      required:
+        - direction
+        - group_id
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+            - before
+            - after
+        group_id:
+          type: string
+    GetInternetAccessGroupsFullResp:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: "#/components/schemas/InternetAccessGroupResp"
+        total_count:
+          type: integer
+    InternetAccessGroupResp:
+      x-speakeasy-entity: InternetAccessGroup
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending-update
+            - applied
+        type:
+          $ref: "#/components/schemas/GroupType"
+        label_ids:
+          type: array
+          items:
+            type: string
+        create_by:
+          type: string
+        create_time:
+          type: string
+        modify_by:
+          type: string
+        modify_time:
+          type: string
+    MultiErrResp:
+      type: object
+      properties:
+        datetime:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/SingleError"
+        request_id:
+          type: string
+    SingleError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
